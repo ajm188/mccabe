@@ -1,6 +1,10 @@
 require 'parser/current'
 require 'set'
 
+BRANCH_TYPES = [:if, :while, :until, :for,
+                :case, :when,
+                :and, :or]
+
 # Get all files recursively.
 def get_all_files(patterns)
   files = Set.new
@@ -45,6 +49,12 @@ def collect_methods(ast)
 end
 
 def complexity(ast)
+  nodes, complexity = [ast], 0
+  until nodes.empty?
+    node = nodes.shift
+    complexity += 1 if BRANCH_TYPES.include?(node.type)
+    nodes += node.children
+  end
 end
 
 get_all_files(ARGV).each do |file|
