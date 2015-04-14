@@ -1,8 +1,6 @@
 require 'parser/current'
 
-BRANCH_TYPES = [:if, :while, :until, :for,
-                :case, :when,
-                :and, :or]
+BRANCH_TYPES = [:if, :while, :until, :for, :when, :and, :or]
 
 # Get all files recursively.
 def get_all_files(patterns)
