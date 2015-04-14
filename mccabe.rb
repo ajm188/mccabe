@@ -15,7 +15,7 @@ def get_all_files(patterns)
         Dir[pattern]
       end
   end
-  files
+  files.select { |file| file.end_with? '.rb' }
 end
 
 def analyze(filename, ast)
