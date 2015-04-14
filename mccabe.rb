@@ -1,5 +1,4 @@
 require 'parser/current'
-require 'set'
 
 BRANCH_TYPES = [:if, :while, :until, :for,
                 :case, :when,
@@ -7,9 +6,9 @@ BRANCH_TYPES = [:if, :while, :until, :for,
 
 # Get all files recursively.
 def get_all_files(patterns)
-  files = Set.new
+  files = []
   patterns.each do |pattern|
-    files +=
+    files |=
       if File.directory? pattern
         sub_patterns =
           (Dir.entries(pattern) - ['.', '..']).map { |sub_pat| "#{pattern}/#{sub_pat}" }
