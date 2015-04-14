@@ -41,7 +41,7 @@ def collect_methods(ast)
     when :class, :module, :begin
       # Have to put node.children in an array and flatten in because the parser
       # returns a frozen array.
-      nodes += node.children
+      nodes += node.children.select { |child| child.is_a? Parser::AST::Node }
     end
   end
   methods
