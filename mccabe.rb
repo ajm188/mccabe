@@ -55,10 +55,10 @@ def complexity(ast)
   complexity
 end
 
-threshold = ARGV.first.to_i < 1 ? 5 : ARGV.shift.to_i
+threshold = ARGV.first.to_i < 1 ? 4 : ARGV.shift.to_i
 get_all_files(ARGV).each do |file|
   file_results = analyze(file, Parser::CurrentRuby.parse(File.read(file)))
-  file_results.keep_if { |method, info| info[:complexity] >= threshold }
+  file_results.keep_if { |method, info| info[:complexity] > threshold }
   unless file_results.empty?
     puts "Violations found in file #{file}:"
     file_results.each do |method, info|
