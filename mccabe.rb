@@ -42,7 +42,7 @@ def collect_methods(ast)
     when :class, :module, :begin
       # Have to put node.children in an array and flatten in because the parser
       # returns a frozen array.
-      nodes += [node.children].flatten
+      nodes += node.children
     end
   end
   methods
@@ -53,10 +53,11 @@ def complexity(ast)
   until nodes.empty?
     node = nodes.shift
     complexity += 1 if BRANCH_TYPES.include?(node.type)
-    nodes += node.children
+    nodes += node.children.select { |child| child.is_a? Parser::AST::Node }
   end
+  complexity
 end
 
 get_all_files(ARGV).each do |file|
-  analyze(file, Parser::CurrentRuby.parse(File.read(file)))
+  p analyze(file, Parser::CurrentRuby.parse(File.read(file)))
 end
