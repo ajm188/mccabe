@@ -1,0 +1,2 @@
+module McCabe
+end

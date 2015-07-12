@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'mccabe/analyzer'
+require 'mccabe/cli'
+require 'mccabe/parser'
+
+options = McCabe::CLI.new.parse!(ARGV)
+
+if ARGV.empty?
+  puts "Please specify at least one file"
+  exit 1
+end
+
+results = McCabe::CLI.get_all_files(ARGV).map do |file|
+  file_results = McCabe::Analyzer.analyze(file, McCabe::Parser.parse(File.read(file)))
+  file_results.keep_if { |method, info| info[:complexity] > options[:threshold] }
+  unless options[:quiet]
+    McCabe::CLI.display_results(file_results) unless file_results.empty?
+  end
+  file_results
+end
+
+exit 1 unless results.flatten.empty?
