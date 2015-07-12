@@ -1,5 +1,7 @@
 require 'optparse'
 
+require 'mccabe/version'
+
 module McCabe
   class CLI
     DEFAULT_OPTIONS = {
@@ -43,7 +45,7 @@ module McCabe
 
     def option_parser
       @option_parser ||= OptionParser.new do |option_parser|
-        option_parser.banner = 'Usage: mccabe.rb file1... [options]'
+        option_parser.banner = "Usage: #{$0} file1... [options]"
 
         option_parser.on '-tTHRESHOLD',
                          '--threshold',
@@ -57,6 +59,11 @@ module McCabe
 
         option_parser.on_tail '-h', '--help', "Display this help message" do
           puts option_parser
+          exit 0
+        end
+
+        option_parser.on_tail '--version' do
+          puts "#{$0} #{McCabe::VERSION}"
           exit 0
         end
       end
