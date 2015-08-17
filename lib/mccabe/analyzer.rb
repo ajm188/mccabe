@@ -4,7 +4,7 @@ module McCabe
   class Analyzer
     BRANCH_TYPES = [:if, :while, :until, :for, :when, :and, :or]
 
-    def self.analyze(filename, ast)
+    def self.analyze(ast)
       results = {}
       McCabe::Parser.collect_methods(ast).each do |name, method|
         results[name] = {line: method[:line], complexity: complexity(method[:body])}

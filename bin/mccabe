@@ -12,7 +12,7 @@ if ARGV.empty?
 end
 
 results = McCabe::CLI.get_all_files(ARGV).map do |file|
-  file_results = McCabe::Analyzer.analyze(file, McCabe::Parser.parse(File.read(file)))
+  file_results = McCabe::Analyzer.analyze(McCabe::Parser.parse(File.read(file)))
   file_results.keep_if { |method, info| info[:complexity] > options[:threshold] }
   unless options[:quiet]
     McCabe::CLI.display_results(file_results) unless file_results.empty?
