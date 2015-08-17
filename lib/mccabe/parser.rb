@@ -5,7 +5,7 @@ module McCabe
     # Collect all the methods from the AST.
     def self.collect_methods(ast)
       methods = {}
-      nodes = [ast]
+      nodes = [ast].compact
       until nodes.empty?
         node = nodes.shift
         case node.type
