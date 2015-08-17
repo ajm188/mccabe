@@ -5,13 +5,8 @@ complexity of Ruby code.
 
 ## Installation
 
-This is currently not a gem, though I will probably turn it in to one soon.
-For now, the following will suffice:
-
 ```
-git clone git@github.com:ajm188/mccabe.git
-cd mccabe
-# Execute the mccabe.rb file (see usage instructions below)
+$ gem install mccabe
 ```
 
 ## Usage
@@ -30,10 +25,10 @@ extensionless Ruby scripts, you won't be able to use this on them.
 
 Examples:
 ```
-ruby mccabe.rb file1 ../file2
-ruby mccabe.rb 3 file1 # using a different threshold
-ruby mccabe.rb *.rb # wildcards work, too
-ruby mccabe.rb . # can also look through entire directories
+mccabe file1 ../file2
+mccabe 3 file1 # using a different threshold
+mccabe *.rb # wildcards work, too
+mccabe . # can also look through entire directories
 ```
 
 ## Contributing
