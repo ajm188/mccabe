@@ -42,5 +42,31 @@ RSpec.describe McCabe::Analyzer do
         expect(McCabe::Analyzer.complexity ast).to be 3
       end
     end
+
+    context 'when an Enumerable method is used' do
+      context 'with a block' do
+        it 'returns 1' do
+          code = '[1, 2].each { |e| puts e }'
+          ast = McCabe::Parser.parse code
+          expect(McCabe::Analyzer.complexity ast).to be 1
+        end
+      end
+
+      context "with 'symbol#to_proc'" do
+        it 'returns 1' do
+          code = '[1, 2].map(&:to_s)'
+          ast = McCabe::Parser.parse code
+          expect(McCabe::Analyzer.complexity ast).to be 1
+        end
+      end
+
+      context 'without a block' do
+        it 'returns 0' do
+          code = '[1, 2].map.each.count'
+          ast = McCabe::Parser.parse code
+          expect(McCabe::Analyzer.complexity ast).to be 0
+        end
+      end
+    end
   end
 end
