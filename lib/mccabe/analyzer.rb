@@ -20,21 +20,25 @@ module McCabe
         if BRANCH_TYPES.include?(node.type)
           complexity += 1
         elsif node.type == :block
-          sent_method = node.children[0]
-          if sent_method.children.length == 2 &&
-              ENUMERABLE_METHODS.include?(sent_method.children[1])
-            complexity += 1
-          end
+          complexity += block_complexity node
         elsif node.type == :send
-          if node.children.length >= 3 &&
-              node.children[2].type == :block_pass &&
-              ENUMERABLE_METHODS.include?(node.children[1])
-            complexity += 1
-          end
+          complexity += send_complexity node
         end
         nodes += node.children.select { |child| child.is_a? ::Parser::AST::Node }
       end
       complexity
+    end
+
+    def self.block_complexity(block_node)
+      sent_method = block_node.children[0]
+      sent_method.children.length == 2 &&
+        ENUMERABLE_METHODS.include?(sent_method.children[1]) ? 1 : 0
+    end
+
+    def self.send_complexity(send_node)
+      send_node.children.length >= 3 &&
+        send_node.children[2].type == :block_pass &&
+        ENUMERABLE_METHODS.include?(send_node.children[1]) ? 1 : 0
     end
   end
 end
