@@ -11,9 +11,7 @@ module McCabe
 
     # Print out the results of a file to the console.
     def self.display_results(file_results)
-      file_results.each do |method, info|
-        puts "#{method} (#{info[:file]}:#{info[:line]}) #{info[:complexity]}"
-      end
+      file_results.each { |method_info| puts method_info.to_s }
     end
 
     # Get all files recursively.

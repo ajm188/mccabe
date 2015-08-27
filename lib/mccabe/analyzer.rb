@@ -1,3 +1,4 @@
+require 'mccabe/analyzer/method_info'
 require 'mccabe/parser'
 
 module McCabe
@@ -8,14 +9,14 @@ module McCabe
     def self.analyze(file)
       ast = McCabe::Parser.parse(File.read(file))
       results = {}
-      McCabe::Parser.collect_methods(ast).each do |name, method|
-        results[name] = {
-          line: method[:line],
-          complexity: complexity(method[:body]),
-          file: file
-        }
+      McCabe::Parser.collect_methods(ast).map do |name, method_ast|
+        MethodInfo.new(
+          name,
+          complexity(method_ast[:body]),
+          file,
+          method_ast[:line]
+        )
       end
-      results
     end
 
     def self.complexity(ast)
