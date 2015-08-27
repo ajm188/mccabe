@@ -8,7 +8,6 @@ module McCabe
 
     def self.analyze(file)
       ast = McCabe::Parser.parse(File.read(file))
-      results = {}
       McCabe::Parser.collect_methods(ast).map do |name, method_ast|
         MethodInfo.new(
           name,
@@ -22,7 +21,7 @@ module McCabe
     def self.complexity(ast)
       nodes, complexity = [ast], 0
       until nodes.empty?
-        node = nodes.shift
+        node = nodes.shift || next
         if BRANCH_TYPES.include?(node.type)
           complexity += 1
         elsif node.type == :block
