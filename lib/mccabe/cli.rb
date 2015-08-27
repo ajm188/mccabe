@@ -6,7 +6,8 @@ module McCabe
   class CLI
     DEFAULT_OPTIONS = {
       threshold: 4,
-      quiet: false
+      quiet: false,
+      sort: false,
     }
 
     # Print out the results of a file to the console.
@@ -49,6 +50,10 @@ module McCabe
                          '--threshold',
                          "threshold of mccabe's complexity to allow through" do |t|
           options[:threshold] = t.to_i
+        end
+
+        option_parser.on '--sort' do |s|
+          options[:sort] = s
         end
 
         option_parser.on '--quiet', "No output to stdout. Exit code only (1 for failure)." do |q|
