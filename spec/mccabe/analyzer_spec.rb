@@ -68,5 +68,18 @@ RSpec.describe McCabe::Analyzer do
         end
       end
     end
+
+    it 'returns 0 for an empty method' do
+      code = <<-CODE
+      def foo
+      end
+      CODE
+      ast = McCabe::Parser.parse code
+      expect(McCabe::Analyzer.complexity ast).to be 0
+    end
+
+    it 'returns 0 on nil' do
+      expect(McCabe::Analyzer.complexity nil).to be 0
+    end
   end
 end
