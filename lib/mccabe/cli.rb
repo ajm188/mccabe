@@ -12,7 +12,7 @@ module McCabe
     # Print out the results of a file to the console.
     def self.display_results(file_results)
       file_results.each do |method, info|
-        puts "\t#{method} (line #{info[:line]}) had a complexity of #{info[:complexity]}"
+        puts "\t#{method} (#{info[:file]}:#{info[:line]}) had a complexity of #{info[:complexity]}"
       end
     end
 
