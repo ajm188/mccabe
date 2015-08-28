@@ -5,10 +5,15 @@ module McCabe
     BRANCH_TYPES = [:if, :while, :until, :for, :when, :and, :or]
     ENUMERABLE_METHODS = Enumerable.instance_methods + [:each]
 
-    def self.analyze(ast)
+    def self.analyze(file)
+      ast = McCabe::Parser.parse(File.read(file))
       results = {}
       McCabe::Parser.collect_methods(ast).each do |name, method|
-        results[name] = {line: method[:line], complexity: complexity(method[:body])}
+        results[name] = {
+          line: method[:line],
+          complexity: complexity(method[:body]),
+          file: file
+        }
       end
       results
     end
