@@ -6,14 +6,13 @@ module McCabe
   class CLI
     DEFAULT_OPTIONS = {
       threshold: 4,
-      quiet: false
+      quiet: false,
+      sort: false,
     }
 
     # Print out the results of a file to the console.
     def self.display_results(file_results)
-      file_results.each do |method, info|
-        puts "#{method} (#{info[:file]}:#{info[:line]}) #{info[:complexity]}"
-      end
+      file_results.each { |method_info| puts method_info.to_s }
     end
 
     # Get all files recursively.
@@ -51,6 +50,10 @@ module McCabe
                          '--threshold',
                          "threshold of mccabe's complexity to allow through" do |t|
           options[:threshold] = t.to_i
+        end
+
+        option_parser.on '--sort' do |s|
+          options[:sort] = s
         end
 
         option_parser.on '--quiet', "No output to stdout. Exit code only (1 for failure)." do |q|

@@ -11,12 +11,11 @@ if ARGV.empty?
 end
 
 results = McCabe::CLI.get_all_files(ARGV).map do |file|
-  file_results = McCabe::Analyzer.analyze(file)
-  file_results.keep_if { |method, info| info[:complexity] > options[:threshold] }
-  unless options[:quiet]
-    McCabe::CLI.display_results(file_results) unless file_results.empty?
-  end
-  file_results
-end
+  methods = McCabe::Analyzer.analyze(file)
+  methods.keep_if { |m| m.complexity > options[:threshold] }
+end.flatten
+
+options[:sort] && results.sort_by! { |m| -m.complexity }
+options[:quiet] || McCabe::CLI.display_results(results)
 
 exit 1 unless results.flatten.empty?
