@@ -1,0 +1,7 @@
+Sat, 31 Oct 2015 22:25:38 -0400
+lib/mccabe/analyzer/method_info.rb	Sat, 31 Oct 2015 22:25:30 -0400
+lib/mccabe/analyzer.rb	Sat, 31 Oct 2015 22:25:30 -0400
+lib/mccabe/cli.rb	Sat, 31 Oct 2015 22:25:30 -0400
+lib/mccabe/parser.rb	Sat, 31 Oct 2015 22:25:30 -0400
+lib/mccabe/version.rb	Sat, 31 Oct 2015 22:25:30 -0400
+lib/mccabe.rb	Sat, 31 Oct 2015 22:25:30 -0400
